@@ -4,8 +4,9 @@ var client = net.connect({host: '192.168.1.111', port: 8888}, function() {
 });
 
 client.on('data', function(data) {
-	var data = JSON.parse(data);
-	console.log(data.type);
+	// var data = JSON.parse(data);
+	// console.log(data.toString());
+	console.log("wwwwww");
 });
 
 client.on('end', function() {

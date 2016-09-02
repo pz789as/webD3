@@ -73,6 +73,9 @@ function JsonR() {
 		var nodesData = [];
 	  var linksData = [];
 	  for (var i=0;i<num;i++) {
+			if (i >= ZxData.length){
+				break;
+			}
       nodesData[i] = ZxData[i];
     }
 
