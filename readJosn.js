@@ -69,7 +69,7 @@ function JsonR() {
 		return GxData;
 	}
 
-	this.AddNodes = function(num, callback) {
+	this.GetLevel = function(num, callback) {
 		var nodesData = [];
 	  var linksData = [];
 	  for (var i=0;i<num;i++) {
@@ -81,8 +81,10 @@ function JsonR() {
 
     for (var i=0;i<GxData.length;i++) {
       var data = GxData[i];
-      if (data.source.key<=num && data.target.key<=num) {
-        linksData[linksData.length] = data;
+      if (data.source.key<=num && 
+				data.target.key<=num && 
+				data.source.key != data.target.key) {
+        	linksData[linksData.length] = data;
       }
     }
 

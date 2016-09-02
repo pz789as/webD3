@@ -48,7 +48,7 @@ function JsonR() {
         zxContent: data.zxContent,
         showKey: data.showKey,
         myWeight: 1,
-        visible: false,
+        // visible: false,
         backColor: 'white',
         index: i,
         order: i,
@@ -104,8 +104,11 @@ function JsonR() {
     linearScale = d3.scaleLinear().domain([minWeight, maxWeight]).range([10, 100]);
 		// 确定半径
 		for (var i = 0; i < myNodes.length; i++) {
-      myNodes[i].radius = linearScale(myNodes[i].myWeight);
+      myNodes[i].radius = myNodes[i].myWeight * 5 + 10;
 		}
+		// myNodes.sort(function(a, b) {
+	  //   return b.radius - a.radius;
+	  // });
 	  // 根据目标半径，确定跟谁连接
 	  for(var i=0;i<myEdges.length;i++){
 			var source = myEdges[i].source;
@@ -125,19 +128,13 @@ function JsonR() {
 			if (source == target.parent){
 				myEdges[i].color = 'rgb(0, 255, 0)';
 				myEdges[i].type = 0;
+				myEdges[i].strength = 1;
 			}else{
 				myEdges[i].color = 'rgba(128, 128, 128, 128)';
 				myEdges[i].type = 1;
+				myEdges[i].strength = 0;
 			}
 		}
-	}
-	// 根据构件key得到字形key
-	function getZxKey(gjKey) {
-	  return GjData[gjKey-1].zxKey;
-	}
-	// 根据构件key得到字形类型
-	function getZxType(gjKey) {
-	  return GjData[gjKey-1].kind;
 	}
 
 	doJosn();
@@ -160,6 +157,7 @@ function JsonR() {
     }
 		// 最后一波出现之后，再添加线
 		if (num == consts.FORCE_DATA.length - 1){
+			index = 0;
 			for(var i=0;i<myEdges.length;i++){
         if (myEdges[i].type == 0){
 					linksData.push(myEdges[i]);

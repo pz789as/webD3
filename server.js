@@ -10,7 +10,7 @@ var index = 0;
 var connected = function(connection) {
 	index += 1;
 	console.log('新客户联入服务器');
-	jsonR.AddNodes(5, function(nodes, links) {
+	jsonR.GetLevel(1000, function(nodes, links) {
 		var force = new forceWork();
 		force.Start(nodes, links, function(type, nodes, links) {
 			if (type == 'ended'){
@@ -20,6 +20,8 @@ var connected = function(connection) {
 					links: links
 				};
 				connection.write(JSON.stringify(data));
+				connection.write('|');
+				console.log('send data!');
 				// console.log(nodes, links);
 			}
 			// connection.write('hello 刘明!');
