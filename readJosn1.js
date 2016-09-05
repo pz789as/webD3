@@ -61,7 +61,7 @@ function JsonR() {
       var gx = goujianGuanxiJson[i];
       var gj = getGJByKey(parseInt(gx.gjKey));//源头构件
       if (parseInt(gx.zxKey) == parseInt(gj.zxKey)) {
-        console.log('自身，所以线不加入');
+        // console.log('自身，所以线不加入');
         continue;
       }
       var source = getNodeByKey(parseInt(gj.zxKey));
@@ -106,9 +106,6 @@ function JsonR() {
 		for (var i = 0; i < myNodes.length; i++) {
       myNodes[i].radius = myNodes[i].myWeight * 4 + 8;
 		}
-		// myNodes.sort(function(a, b) {
-	  //   return b.radius - a.radius;
-	  // });
 	  // 根据目标半径，确定跟谁连接
 	  for(var i=0;i<myEdges.length;i++){
 			var source = myEdges[i].source;
@@ -135,6 +132,9 @@ function JsonR() {
 				myEdges[i].strength = 0;
 			}
 		}
+    // myNodes.sort(function(a, b) {
+	  //   return b.radius - a.radius;
+	  // });
 	}
 
 	doJosn();
