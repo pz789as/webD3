@@ -104,7 +104,7 @@ function JsonR() {
     linearScale = d3.scaleLinear().domain([minWeight, maxWeight]).range([10, 100]);
 		// 确定半径
 		for (var i = 0; i < myNodes.length; i++) {
-      myNodes[i].radius = myNodes[i].myWeight * 5 + 10;
+      myNodes[i].radius = myNodes[i].myWeight * 4 + 8;
 		}
 		// myNodes.sort(function(a, b) {
 	  //   return b.radius - a.radius;
