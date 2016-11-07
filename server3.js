@@ -1,7 +1,39 @@
 var WebSocketServer = require('ws').Server;
 var mail = require('./mail.js');
+var fs = require('fs');
+var iconv = require('iconv-lite');  
 
 var server = new WebSocketServer({host: '192.168.1.112', port: 8888});
+
+function writeFile(file, str){
+    // 把中文转换成字节数组  
+    // var arr = iconv.encode(str, 'gbk');  
+    // console.log(arr);  
+      
+    // appendFile，如果文件不存在，会自动创建新文件  
+    // 如果用writeFile，那么会删除旧文件，直接写新文件  
+    fs.appendFile(file, str, function(err){  
+        if(err)  
+            console.log("fail " + err);  
+        else  
+            console.log("写入文件ok");  
+    });  
+};
+
+function readFile(file){  
+    fs.readFile(file, function(err, data){  
+        if(err)  
+            console.log("读取文件fail " + err);  
+        else{  
+            // 读取成功时  
+            // 输出字节数组  
+            console.log(data);
+            // 把数组转换为gbk中文  
+            // var str = iconv.decode(data, 'gbk');  
+            // console.log(str);  
+        }  
+    });  
+} 
 
 var sendNumber = '';
 server.on('connection', function(connection) {
@@ -36,6 +68,9 @@ server.on('connection', function(connection) {
 					connection.send(`{"code": 1, "desc": "${sendNumber}"}|`);
 				}
 			});
+		}else if (jsonData.code == 1){
+			writeFile('test.txt', data.toString()+`\r\n`);
+			connection.send(`{"code": 2}|`);
 		}
 	});
 	connection.on('close', function(){
