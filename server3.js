@@ -21,18 +21,25 @@ function writeFile(file, str){
 };
 
 function readFile(file){  
-    fs.readFile(file, function(err, data){  
-        if(err)  
-            console.log("读取文件fail " + err);  
-        else{  
-            // 读取成功时  
-            // 输出字节数组  
-            console.log(data);
-            // 把数组转换为gbk中文  
-            // var str = iconv.decode(data, 'gbk');  
-            // console.log(str);  
-        }  
-    });  
+    // fs.readFile(file, function(err, data){  
+    //     if(err){
+    //         console.log("读取文件fail " + err);
+	// 	}else{  
+    //         // 读取成功时  
+    //         // 输出字节数组  
+    //         // console.log(data);
+    //         // 把数组转换为gbk中文  
+    //         var str = iconv.decode(data, 'utf-8');  
+    //         console.log(str);
+    //     }  
+    // });
+	fs.readFile(file, {flag: 'r+', encoding: 'utf-8'}, function(err, data){
+		if (err){
+			console.log('read file error! ' + err);
+		}else {
+			console.log(data);
+		}
+	})
 } 
 
 var sendNumber = '';
@@ -69,8 +76,9 @@ server.on('connection', function(connection) {
 				}
 			});
 		}else if (jsonData.code == 1){
+			// readFile('test.txt');
 			writeFile('test.txt', data.toString()+`\r\n`);
-			connection.send(`{"code": 2}|`);
+			connection.send(`{"code": 2, "url": "http://www.baidu.com"}|`);
 		}
 	});
 	connection.on('close', function(){
